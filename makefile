@@ -1,20 +1,27 @@
 IDIR = include
 SDIR = sources
 ODIR = obj
+BOOST = /opt/local/include
 
-_DEPS = data_parser.hpp image.hpp image_container.hpp literals.hpp
-_OBJ = data_parser.o image.o image_container.o literals.o main.o
+_DEPS = data_container.hpp data_point.hpp mnist_parser.hpp
+_OBJ = data_container.o data_point.o mnist_parser.o main.o
 
 CC = g++
-CFLAGS = -O2 -Wall -Wno-reorder -std=c++11 -I$(IDIR)
+CFLAGS = -O2 -Wno-deprecated-declarations -Wno-reorder -std=c++20 -I$(IDIR) -I$(BOOST)
 
 
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
+
 $(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
+
+all: directories
+
+directories:
+	mkdir -p $(ODIR)
 
 main: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)

@@ -1,20 +1,20 @@
 #include <cstdio>
 #include <fstream>
 #include <cstring>
-#include "data_parser.hpp"
-#include "literals.hpp"
-#include "image.hpp"
-
+#include<iostream>
+// #include "data_parser.hpp"
+// #include "literals.hpp"
+// #include "image.hpp"
+#include "data_point.hpp"
+#include "data_container.hpp"
+#include "mnist_parser.hpp"
 
 int main()
 {
-  try {
-    DataParser parser = DataParser(IMG_SOURCE, LBL_SOURCE);
-    parser.load_data();
-    parser.container.write_to_files();
-  }
-  catch(std::runtime_error& e) {
-    printf("RUNTIME ERROR:\n%s\nABORTING...\n", e.what());
-  }
+  auto dataset = MnistParser::parse();
+
+  std::cout << "eheh: ";
+  dataset.print(); 
   return 0;
 }
+
